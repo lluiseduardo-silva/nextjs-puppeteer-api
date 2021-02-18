@@ -10,7 +10,7 @@ const chromeExecPaths = {
 
 export default async function handle(req,res){
 
-    
+    let exec = chromeExecPaths[process.platform];
     
     let {url} =  req.body
 
@@ -33,7 +33,10 @@ export default async function handle(req,res){
             request.abort();
         }else if (['.m3u8','.mp4'].some(v => request.url().includes(v)) || ['video/mp4'].some(v => request.url().includes(v))){
             if(request.url().indexOf('anitube') == -1){
-                sources.push({"url":request.url()});
+                sources.push({
+                    "url":request.url(),
+                    "headers":request.headers()
+                });
             }
             request.continue();
         }
@@ -42,7 +45,7 @@ export default async function handle(req,res){
         }
     });
 
-    await page.goto(url);
+    await page.goto(url, {waitUntil:'networkidle2'});
 
     await browser.close();
 
