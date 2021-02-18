@@ -62,7 +62,7 @@ export default async function(req,res){
 
     await browser.close();
     const daa = new Date();
-    res.setHeader('Cache-Control', 's-maxage=172800')
+    res.setHeader('Cache-Control', 's-maxage=604800')
     res.status(200).send({"data":data,
                         "date":daa});
     // res.send('ok')
