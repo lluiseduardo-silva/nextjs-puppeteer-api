@@ -61,7 +61,9 @@ export default async function(req,res){
     let data = await animesEvaluate(page)
 
     await browser.close();
-
-    res.status(200).json(JSON.stringify(data))
+    const daa = new Date();
+    res.setHeader('Cache-Control', 's-maxage=172800')
+    res.status(200).send({"data":data,
+                        "date":daa});
     // res.send('ok')
 }

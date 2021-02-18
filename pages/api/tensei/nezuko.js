@@ -70,6 +70,9 @@ export default async function(req,res){
 
     await browser.close();
 
-    res.status(200).json(JSON.stringify(data))
+    let daa = new Date();
+    res.setHeader('Cache-Control', 's-maxage=3600')
+    res.status(200).send({"data":data,
+                        "date":daa});
     // res.send('ok')
 }

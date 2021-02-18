@@ -99,10 +99,9 @@ export default async function handler(req, res) {
     });
 
     await browser.close();
-    
+
     const daa = new Date();
-    
-    res.setHeader('Cache-Control', 's-maxage=86400')
+    res.setHeader('Cache-Control', 's-maxage=3600')
     res.status(200).send({
         "animes": data,
         "data": daa
