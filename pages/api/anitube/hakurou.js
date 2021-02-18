@@ -30,7 +30,7 @@ export default async function handle(req,res){
             request.abort();
         }else if (['.m3u8','.mp4'].some(v => request.url().includes(v)) || ['video/mp4'].some(v => request.url().includes(v))){
             if(request.url().indexOf('anitube') == -1){
-                sources.push(request.url());
+                sources.push({"url":request.url()});
             }
             request.continue();
         }

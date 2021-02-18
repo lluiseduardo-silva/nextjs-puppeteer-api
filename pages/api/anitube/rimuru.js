@@ -91,7 +91,7 @@ export default async function handler(req, res) {
            "MaisAssistidos": ma,
            "EpisodiosRecentes":el,
            "Adicionados": ar,
-           "Lançamentos": ld
+           "Lancamentos": ld
        }
     });
 
