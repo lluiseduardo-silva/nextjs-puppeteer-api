@@ -4,11 +4,11 @@ const puppeteer = require('puppeteer-core');
 // TODO - Globalizar Variavel
 // Usado somente em ambiente local
 // Para ambientes de produção substituir o executablePath: execPath por executablePath: await chrome.executablePath
-const chromeExecPaths = {
-    win32:'C:\\Program Files\\Google\\Chrome\\Application\\chrome.exe',
-    linux: 'usr/bin/google-chrome',
-    darwin: '/Applications/Google Chrome.app/Contents/MacOS/Google Chrome'
-}
+// const chromeExecPaths = {
+//     win32:'C:\\Program Files\\Google\\Chrome\\Application\\chrome.exe',
+//     linux: 'usr/bin/google-chrome',
+//     darwin: '/Applications/Google Chrome.app/Contents/MacOS/Google Chrome'
+// }
 async function animesEvaluate(page){
     return await page.evaluate(()=>{
         PageAnimes = document.querySelectorAll('body > div.mwidth > div.searchPagContainer > div ')
@@ -33,12 +33,12 @@ async function animesEvaluate(page){
     })
 }
 export default async function(req,res){
-    let execPath = chromeExecPaths[process.platform]
+    // let execPath = chromeExecPaths[process.platform]
     let {busca} = req.body
     console.log(busca);
     let url= ''
     if(busca === ''){
-        url = 'https://www.anitube.site/lista-de-animes-online/'
+        res.status(500).send('Necessario informar algo na busca')
     }else{
         url = `https://www.anitube.site/?s=${busca}`
     }
@@ -67,6 +67,6 @@ export default async function(req,res){
 
     await browser.close();
 
-    res.send(data);
+    res.status(200).json(JSON.stringify(data))
     // res.send('ok')
 }

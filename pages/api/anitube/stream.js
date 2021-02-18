@@ -1,36 +1,48 @@
-const request = require('request')
-const cheerio = require('cheerio');
+const chrome = require('chrome-aws-lambda');
+const puppeteer = require('puppeteer-core');
+
+const chromeExecPaths = {
+    win32:'C:\\Program Files\\Google\\Chrome\\Application\\chrome.exe',
+    linux: 'usr/bin/google-chrome',
+    darwin: '/Applications/Google Chrome.app/Contents/MacOS/Google Chrome'
+}
 
 export default async function handle(req,res){
-    let {url} = req.body
-    if(url == ''){
-        res.status(500).send('URL é obrigatoria')
-    }
-    let dados = []
-    let promise = new Promise(
-        function(resolve,reject){
-            request(url, (err,resonse,body)=>{
-                let $ = cheerio.load(body);
-                let textNode = $('#video > script')[5].children[0]
-                if (textNode){
-                    var scriptText = textNode.data.replace(/\r?\n|\r/g, "")
-                                                .replace(/file:/g, '"file":')
-                                                .replace(/label:/g, '"label":')
-                                                .replace(/type:/g, '"type":')
-                                                .replace(/default:/g, '"default":')
-                                                .replace(/'/g,'"');
-                    var jsonString = /sources:(.*)}\);/.exec(scriptText)[1];
-                    let index=jsonString.indexOf(']');
-                    let sources = jsonString.substr(0,index+1);
-                    console.log(JSON.parse(sources));
-                    dados.push(JSON.parse(sources));
-                    resolve()
-                }else{
-                    reject()
-                }
-            })
-        }
-    )
 
-    res.status(200).send(dados);
+    let execPath = chromeExecPaths[process.platform]
+    
+    let {url} =  req.body
+
+    const browser = await puppeteer.launch({
+        args: chrome.args,
+        executablePath: await chrome.executablePath,
+        headless: chrome.headless,
+        defaultViewport: {width: 1024,height:768}
+    });
+
+    const page = await browser.newPage();
+
+    page.setRequestInterception(true);
+
+    let sources = [];
+    page.on('request', (request)=>{
+        if(['image','stylesheet','font'].includes(request.resourceType())){
+            request.abort();
+        }else if (['.m3u8','.mp4'].some(v => request.url().includes(v)) || ['video/mp4'].some(v => request.url().includes(v))){
+            if(request.url().indexOf('anitube') == -1){
+                sources.push(request.url());
+            }
+            request.continue();
+        }
+        else{
+            request.continue();
+        }
+    });
+
+    await page.goto(url);
+
+    await browser.close();
+
+
+    res.status(200).send(sources)
 }
