@@ -103,8 +103,8 @@ export default async function handler(req, res) {
 
     const daa = new Date();
 
-    res.status(200).json(JSON.stringify({
-        "dados":data,
-        "hora": daa.toTimeString()
-    }));
+    res.status(200).send({
+        "animes": data,
+        "data": daa
+    });
   }
