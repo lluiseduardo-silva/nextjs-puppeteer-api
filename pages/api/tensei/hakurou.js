@@ -49,6 +49,8 @@ export default async function handle(req,res){
 
     await browser.close();
 
-
-    res.status(200).send(sources)
+    let daa = new Date();
+    res.setHeader('Cache-Control', 's-maxage=604800')
+    res.status(200).send({"data":sources,
+                        "date":daa});
 }
