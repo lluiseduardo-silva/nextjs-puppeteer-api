@@ -12,7 +12,7 @@ export default async function handle(req,res){
 
     let exec = chromeExecPaths[process.platform];
     
-    let {url} =  req.body
+    let {url} =  req.query
 
     const browser = await puppeteer.launch({
         args: chrome.args,

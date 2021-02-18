@@ -35,7 +35,7 @@ async function animesEvaluate(page){
 }
 export default async function(req,res){
     // let execPath = chromeExecPaths[process.platform]
-    let {busca} = req.body
+    let {busca} = req.query
     console.log(busca);
     let url= ''
     if(busca === ''){

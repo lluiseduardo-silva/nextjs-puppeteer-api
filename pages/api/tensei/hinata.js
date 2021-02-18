@@ -31,7 +31,7 @@ async function animesEvaluate(page){
 }
 export default async function(req,res){
     // let execPath = chromeExecPaths[process.platform]
-    let {url} = req.body
+    let {url} = req.query
     if(url === ''){
         url = 'https://www.anitube.site/lista-de-animes-online/'
     }

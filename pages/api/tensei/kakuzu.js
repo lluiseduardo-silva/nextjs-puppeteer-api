@@ -34,7 +34,7 @@ async function detalheEvaluate(page){
 export default async function(req,res){
     // let execPath = chromeExecPaths[process.platform]
 
-    let {url} = req.body
+    let {url} = req.query
 
     if(url === ''){
         res.status(500).send('URL é obrigatoria')
