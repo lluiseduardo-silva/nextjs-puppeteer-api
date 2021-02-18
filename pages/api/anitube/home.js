@@ -10,6 +10,7 @@ const chromeExecPaths = {
 export default async function handler(req, res) {
 
     let exePath = chromeExecPaths[process.platform]
+    
     const browser = await puppeteer.launch({
         args: chrome.args,
         executablePath: await chrome.executablePath,
