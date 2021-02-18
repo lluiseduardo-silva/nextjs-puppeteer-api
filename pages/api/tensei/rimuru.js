@@ -13,10 +13,8 @@ export default async function handler(req, res) {
     let exePath = chromeExecPaths[process.platform]
     
     const browser = await puppeteer.launch({
-        args: chrome.args,
         executablePath: await chrome.executablePath,
         headless: chrome.headless,
-        defaultViewport: {width: 1024,height:768}
     });
 
     const page = await browser.newPage();
@@ -99,11 +97,11 @@ export default async function handler(req, res) {
     });
 
     await browser.close();
+    res.setHeader('Cache-Control', 's-max-age=180, stale-while-revalidate')
+
     const daa = new Date();
 
-    res.status(200)
-    .setHeader('Cache-Control', 's-max-age=180, stale-while-revalidate')
-    .json(JSON.stringify({
+    res.status(200).json(JSON.stringify({
         "dados":data,
         "hora": daa.toTimeString()
     }));
