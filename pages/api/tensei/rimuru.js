@@ -1,5 +1,6 @@
 const chrome = require("chrome-aws-lambda")
 const puppeteer = require('puppeteer-core');
+const randomUseragent = require('random-useragent');
 
 const chromeExecPaths = {
     win32:'C:\\Program Files\\Google\\Chrome\\Application\\chrome.exe',
@@ -19,6 +20,8 @@ export default async function handler(req, res) {
     });
 
     const page = await browser.newPage();
+
+    page.setUserAgent(randomUseragent.getRandom())
 
     page.setRequestInterception(true);
 

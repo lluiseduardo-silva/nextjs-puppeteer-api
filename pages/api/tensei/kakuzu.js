@@ -1,5 +1,6 @@
 const chrome = require('chrome-aws-lambda');
 const puppeteer = require('puppeteer-core');
+const randomUseragent = require('random-useragent');
 
 // TODO - Globalizar Variavel
 // Usado somente em ambiente local
@@ -47,6 +48,7 @@ export default async function(req,res){
     });
 
     const page = await browser.newPage();
+    page.setUserAgent(randomUseragent.getRandom())
 
     page.setRequestInterception(true);
 
