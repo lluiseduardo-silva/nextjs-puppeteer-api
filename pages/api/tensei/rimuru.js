@@ -2,16 +2,21 @@ const chrome = require("chrome-aws-lambda")
 const puppeteer = require('puppeteer-core');
 const randomUseragent = require('random-useragent');
 
-const chromeExecPaths = {
-    win32:'C:\\Program Files\\Google\\Chrome\\Application\\chrome.exe',
-    linux: 'usr/bin/google-chrome',
-    darwin: '/Applications/Google Chrome.app/Contents/MacOS/Google Chrome'
-}
+/**
+ * constante com os locais de instalação do chrome padrão em cada sistema operacional
+ */
+// const chromeExecPaths = {
+//     win32:'C:\\Program Files\\Google\\Chrome\\Application\\chrome.exe',
+//     linux: 'usr/bin/google-chrome',
+//     darwin: '/Applications/Google Chrome.app/Contents/MacOS/Google Chrome'
+// }
 
 export default async function handler(req, res) {
 
+    //Configuração necessaria para executar localmente
     let exePath = chromeExecPaths[process.platform]
     
+    //Instancia do navegador
     const browser = await puppeteer.launch({
         args: chrome.args,
         executablePath: await chrome.executablePath,
@@ -19,12 +24,16 @@ export default async function handler(req, res) {
         defaultViewport: {width: 1024,height:768}
     });
 
+    //Cria uma nova aba no navegador
     const page = await browser.newPage();
 
+    //Define um useragente aleatorio
     page.setUserAgent(randomUseragent.getRandom())
 
+    //Ativa interceptação de requisição
     page.setRequestInterception(true);
 
+    //Otimização de uso de rede
     page.on('request', (request)=>{
         if(['image','stylesheet','font'].includes(request.resourceType())){
             request.abort();
@@ -32,9 +41,10 @@ export default async function handler(req, res) {
             request.continue();
         }
     });
-    
+    //Navega até a pagina
     await page.goto('https://anitube.site');
 
+    //Processamento de dados assincrono
     let data = await page.evaluate(()=>{
         /*
             Animes com mais Visualização
@@ -98,10 +108,21 @@ export default async function handler(req, res) {
        }
     });
 
+    /**
+     * Fechamento do navegador
+     */
     await browser.close();
 
+    /**
+     * Data para controle de versão do cache
+     */
     const daa = new Date();
+    /**
+     * Define que vai guardar a resposta desse endpoint em cache
+     * Caso o cache expire vai realizar todo o procedimento do endpoint novamente e definir um novo cache
+     */
     res.setHeader('Cache-Control', 's-maxage=3600')
+    //Retorna os dados do endpoint
     res.status(200).send({
         "animes": data,
         "data": daa
