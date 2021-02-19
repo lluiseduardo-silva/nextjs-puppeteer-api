@@ -14,6 +14,12 @@ async function animesEvaluate(page){
     return await page.evaluate(()=>{
         PageAnimes = document.querySelectorAll('body > div.mwidth > div.listaPagAnimes > div');
         da = [];
+        let nextpage;
+        try{
+            nextpage = document.querySelector('a.next').getAttribute('href');
+        }catch(err){
+            throw new Error(err);
+        }
         PageAnimes.forEach(element => {
             da.push({
                 "title":element.children[0].title,
@@ -24,7 +30,7 @@ async function animesEvaluate(page){
         });
         return {
             "animes":da,
-            "next_page_link":document.querySelector('a.next').getAttribute('href')??''
+            "nextpage":nextpage??''
         }
     })
 }
