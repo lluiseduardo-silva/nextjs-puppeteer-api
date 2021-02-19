@@ -14,7 +14,7 @@ const randomUseragent = require('random-useragent');
 export default async function handler(req, res) {
 
     //Configuração necessaria para executar localmente
-    let exePath = chromeExecPaths[process.platform]
+    // let exePath = chromeExecPaths[process.platform]
     
     //Instancia do navegador
     const browser = await puppeteer.launch({

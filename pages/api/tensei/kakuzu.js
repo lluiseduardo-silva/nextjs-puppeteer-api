@@ -52,7 +52,7 @@ export default async function(req,res){
      /**
      * Carrega o local padrão do chrome de acordo com o seu sistema operacional com base na plataforma em que está rodando
      */
-    let exec = chromeExecPaths[process.platform];
+    // let exec = chromeExecPaths[process.platform];
     
     /**
      * Recupera a ULR que vem via parametro na URL no endpoint da rota
