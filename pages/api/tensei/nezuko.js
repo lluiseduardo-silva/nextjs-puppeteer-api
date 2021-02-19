@@ -17,8 +17,10 @@ async function animesEvaluate(page){
         let nextpage;
         try{
             nextpage = document.querySelector('a.next')
-            if(nextpage){
+            if(nextpage != null){
                 nextpage = nextpage.getAttribute('href');
+            }else{
+                nextpage='';
             }
         }catch(err){
             throw new Error(err);
