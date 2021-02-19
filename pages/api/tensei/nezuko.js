@@ -14,12 +14,7 @@ async function animesEvaluate(page){
     return await page.evaluate(()=>{
         PageAnimes = document.querySelectorAll('body > div.mwidth > div.searchPagContainer > div ')
         da = [];
-        // nextpage = document.querySelector('a.next');
-        // if(nextpage){
-        //     console.log('temos um link')
-        // }else{
-        //     nextpage = '';
-        // }
+       
         PageAnimes.forEach(element => {
             da.push({
                 "title":element.children[0].title,
@@ -30,6 +25,7 @@ async function animesEvaluate(page){
         });
         return {
             "animes":da,
+            "nextpage": document.querySelector('a.next').getAttribute('href')??''
         }
     })
 }
