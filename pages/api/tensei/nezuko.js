@@ -31,11 +31,13 @@ async function animesEvaluate(page){
 }
 export default async function(req,res){
     // let execPath = chromeExecPaths[process.platform]
-    let {busca} = req.query
+    let {busca, nextpage} = req.query
     console.log(busca);
     let url= ''
     if(busca === ''){
         res.status(500).send('Necessario informar algo na busca')
+    }else if(nextpage != ''){
+        url = nextpage;
     }else{
         url = `https://www.anitube.site/?s=${busca}`
     }
