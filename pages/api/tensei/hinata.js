@@ -136,7 +136,7 @@ export default async function(req,res){
     /**
      * Processamento de dados
      */
-    let data = await animesEvaluate(page)
+    let animes = await animesEvaluate(page)
 
     //fecha o navegador
     await browser.close();
@@ -153,7 +153,7 @@ export default async function(req,res){
      * o servidor vai retornar o cache da ultima requisição com sucesso!
      * caso o cache já tenha expirado vai executar todo o código do endpoint e definir um novo cache
      */
-    res.status(200).send({"animes":data,
+    res.status(200).send({animes,
                         "data":daa});
     // res.send('ok')
 }
