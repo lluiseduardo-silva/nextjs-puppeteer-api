@@ -55,7 +55,7 @@ async function animesEvaluate(page){
         });
         //Retorno da função
         return {
-            "animes":dados,
+            dados,
             "nextpage": nextpage??''
         }
     })
