@@ -117,6 +117,9 @@ export default async function handler(req, res) {
      * Data para controle de versão do cache
      */
     const daa = new Date();
+    if(Object.keys(data['MaisAssistidos']).length > 0 && Object.keys(data['EpisodiosRecentes']).length > 0 && Object.keys(data['Adicionados']).length > 0 && Object.keys(data['Lancamentos']).length > 0){
+        //Define o tempo de cache no servidor
+    res.setHeader('Cache-Control', 's-maxage=3600')
     /**
      * Define que vai guardar a resposta desse endpoint em cache
      * Caso o cache expire vai realizar todo o procedimento do endpoint novamente e definir um novo cache
@@ -127,4 +130,9 @@ export default async function handler(req, res) {
         "animes": data,
         "data": daa
     });
+    }
+    else{
+        res.status(500).send('Falha ao carregar resultados');
+    }
+    
   }

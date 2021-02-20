@@ -125,7 +125,9 @@ export default async function(req,res){
      * Ela é usada para manter controle da data de cache no servidor 
      */
     let daa = new Date();
-    //Define o tempo de cache no servidor
+
+    if(Object.keys(data).length > 0){
+        //Define o tempo de cache no servidor
     res.setHeader('Cache-Control', 's-maxage=14400')
     /**
      * Caso já tenha acontecido uma requisição nesse periodo de tempo
@@ -134,5 +136,9 @@ export default async function(req,res){
      */
     res.status(200).send({"detalhes":data,
                         "data":daa});
-    // res.send('ok')
+    }
+    else{
+        res.status(500).send('Falha ao carregar resultados');
+    }
+    
 }

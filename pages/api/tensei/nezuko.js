@@ -142,7 +142,8 @@ export default async function(req,res){
      * Ela é usada para manter controle da data de cache no servidor 
      */
     let daa = new Date();
-    //Define o tempo de cache no servidor
+    if(Object.keys(animes['dados']).length > 0){
+        //Define o tempo de cache no servidor
     res.setHeader('Cache-Control', 's-maxage=3600')
     /**
      * Caso já tenha acontecido uma requisição nesse periodo de tempo
@@ -151,5 +152,10 @@ export default async function(req,res){
      */
     res.status(200).send({animes,
                         "data":daa});
+    }
+    else{
+        res.status(500).send('Falha ao carregar resultados');
+    }
+    
     // res.send('ok')
 }

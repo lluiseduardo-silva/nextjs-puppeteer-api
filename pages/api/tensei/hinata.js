@@ -115,7 +115,7 @@ export default async function (req, res) {
          * altere o 'await chrome.executablePath' para 'exec'
          * e você conseguira executar esse endpoint localmente
          */
-        executablePath: await chrome.executablePath,
+        executablePath: exec,
         //Define se é para abrir a janela do navegador ou não.
         headless: chrome.headless,
         //Define o tamanho padrão da endpoint
@@ -163,15 +163,19 @@ export default async function (req, res) {
      */
     let daa = new Date();
     //Define o tempo de cache no servidor
-    res.setHeader('Cache-Control', 's-maxage=604800')
     /**
      * Caso já tenha acontecido uma requisição nesse periodo de tempo
      * o servidor vai retornar o cache da ultima requisição com sucesso!
      * caso o cache já tenha expirado vai executar todo o código do endpoint e definir um novo cache
      */
-    res.status(200).send({
-        animes,
-        "data": daa
-    });
-    // res.send('ok')
+    if(Object.keys(animes['dados']).length > 0){
+        res.setHeader('Cache-Control', 's-maxage=604800');
+        res.status(200).send({
+            animes,
+            "data": daa
+        });
+    }
+    else{
+        res.status(500).send('Falha ao carregar resultados');
+    }
 }

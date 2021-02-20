@@ -7,11 +7,11 @@ const randomUseragent = require('random-useragent');
  * Necessario para executar localmente na maquina
  * Caso sua maquina esteja exeuctando um sistema operacional X86 altere a string win32 para C:\\Program Files (x86)\\Google\\Chrome\\Application\\chrome.exe
  */
-const chromeExecPaths = {
-    win32:'C:\\Program Files\\Google\\Chrome\\Application\\chrome.exe',
-    linux: 'usr/bin/google-chrome',
-    darwin: '/Applications/Google Chrome.app/Contents/MacOS/Google Chrome'
-}
+// const chromeExecPaths = {
+//     win32:'C:\\Program Files\\Google\\Chrome\\Application\\chrome.exe',
+//     linux: 'usr/bin/google-chrome',
+//     darwin: '/Applications/Google Chrome.app/Contents/MacOS/Google Chrome'
+// }
 
 
 /**
@@ -97,7 +97,9 @@ export default async function handle(req,res){
      * Ela é usada para manter controle da data de cache no servidor 
      */
     let daa = new Date();
-    //Define o tempo de cache no servidor
+
+    if(Object.keys(sources).length > 0){
+        //Define o tempo de cache no servidor
     res.setHeader('Cache-Control', 's-maxage=604800')
     /**
      * Caso já tenha acontecido uma requisição nesse periodo de tempo
@@ -106,4 +108,9 @@ export default async function handle(req,res){
      */
     res.status(200).send({"fontes":sources,
                         "data":daa});
+    }
+    else{
+        res.status(500).send('Falha ao carregar resultados');
+    }
+    
 }
