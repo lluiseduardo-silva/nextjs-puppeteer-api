@@ -78,8 +78,8 @@ export default async function(req,res){
     if(busca === ''){
         res.status(500).send('Necessario informar algo na busca')
         //Caso envie a busca e o link da proxima pagina url recebe nextpage
-    }else if(nextpage != ''){
-        url = nextpage;
+    }else if(url != ''){
+        url = url;
         //Caso falhe em tudo url recebe a uri base de busca
     }else{
         url = `https://www.anitube.site/?s=${busca}`
