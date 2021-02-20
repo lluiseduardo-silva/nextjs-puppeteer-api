@@ -8,11 +8,11 @@ const randomUseragent = require('random-useragent');
  * Caso sua maquina esteja exeuctando um sistema operacional X86 altere a string win32 para C:\\Program Files (x86)\\Google\\Chrome\\Application\\chrome.exe
  */
 
-const chromeExecPaths = {
-    win32:'C:\\Program Files\\Google\\Chrome\\Application\\chrome.exe',
-    linux: 'usr/bin/google-chrome',
-    darwin: '/Applications/Google Chrome.app/Contents/MacOS/Google Chrome'
-}
+// const chromeExecPaths = {
+//     win32:'C:\\Program Files\\Google\\Chrome\\Application\\chrome.exe',
+//     linux: 'usr/bin/google-chrome',
+//     darwin: '/Applications/Google Chrome.app/Contents/MacOS/Google Chrome'
+// }
 
 
 /**
@@ -52,7 +52,7 @@ export default async function(req,res){
      /**
      * Carrega o local padrão do chrome de acordo com o seu sistema operacional com base na plataforma em que está rodando
      */
-    let exec = chromeExecPaths[process.platform];
+    // let exec = chromeExecPaths[process.platform];
     
     /**
      * Recupera a ULR que vem via parametro na URL no endpoint da rota
@@ -72,17 +72,17 @@ export default async function(req,res){
      */
     const browser = await puppeteer.launch({
         //Carrega os argumentos de execução
-        // args: chrome.args,
+        args: chrome.args,
         /**
          * Recupera o local do executavel no dispositivo
          * altere o 'await chrome.executablePath' para 'exec'
          * e você conseguira executar esse endpoint localmente
          */
-        executablePath: exec,
+        executablePath: await chrome.executablePath,
         //Define se é para abrir a janela do navegador ou não.
         headless: chrome.headless,
         //Define o tamanho padrão da endpoint
-        // defaultViewport: {width: 1024,height:768}
+        defaultViewport: {width: 1024,height:768}
     });
 
     //Instancia uma nova guia no navegador
