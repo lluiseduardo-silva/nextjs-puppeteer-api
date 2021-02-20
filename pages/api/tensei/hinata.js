@@ -46,8 +46,8 @@ async function animesEvaluate(page) {
                  * Processa os campos necessarios e adiciona no array
                  */
                 dados.push({
-                    "title": element.href,
-                    "pageLink": element.title,
+                    "title": element.title,
+                    "pageLink": element.href,
                 })
             });
         }
