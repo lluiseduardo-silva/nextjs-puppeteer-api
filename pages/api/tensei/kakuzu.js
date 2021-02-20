@@ -41,9 +41,9 @@ async function detalheEvaluate(page){
         //Retorno da função
         return {
             "titulo":document.querySelector('body > div.pagAniTitulo > div')?document.querySelector('body > div.pagAniTitulo > div').innerText: 'Sem titulo',
-            "sinopse": document.querySelector('#sinopse2')?document.querySelector('#sinopse2').getAttribute('href'): 'sem sinopse',
+            "sinopse": document.querySelector('#sinopse2')?document.querySelector('#sinopse2').innerText: 'sem sinopse',
             "ano":document.querySelector('#anime > div.animeFlexContainer > div.right > div > div:nth-child(12)')?document.querySelector('#anime > div.animeFlexContainer > div.right > div > div:nth-child(12)').innerText : 'Ano Não expecificado' ,
-            "capa":document.querySelector('#capaAnime > img')?document.querySelector('#capaAnime > img'):'Capa Não encontrada',
+            "capa":document.querySelector('#capaAnime > img')?document.querySelector('#capaAnime > img').src:'Capa Não encontrada',
             "episodios":episodioProcessado
         }
     })
