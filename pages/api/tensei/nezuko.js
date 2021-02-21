@@ -142,7 +142,7 @@ export default async function(req,res){
      * Ela é usada para manter controle da data de cache no servidor 
      */
     let daa = new Date();
-    if(Object.keys(animes['dados']).length > 0){
+    if(Object.keys(animesB['dados']).length > 0){
         //Define o tempo de cache no servidor
     res.setHeader('Cache-Control', 's-maxage=3600')
     /**

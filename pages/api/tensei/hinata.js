@@ -168,7 +168,7 @@ export default async function (req, res) {
      * o servidor vai retornar o cache da ultima requisição com sucesso!
      * caso o cache já tenha expirado vai executar todo o código do endpoint e definir um novo cache
      */
-    if(Object.keys(animes['dados']).length > 0){
+    if(Object.keys(animesL['dados']).length > 0){
         res.setHeader('Cache-Control', 's-maxage=604800');
         res.status(200).send({
             animesL,
