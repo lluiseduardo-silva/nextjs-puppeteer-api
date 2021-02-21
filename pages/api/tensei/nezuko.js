@@ -23,7 +23,7 @@ async function animesEvaluate(page){
         //Recupera os animes presentes na pagina
         PageAnimes = document.querySelectorAll('body > div.mwidth > div.searchPagContainer > div ')
         //Array que armazena os resultados
-        dados = [];
+        dadosB = [];
         //Variavel que vai receber o link de próxima pagina
         let nextpage;
         //Try Catch para evitar exception e quebrar o endpoint
@@ -46,7 +46,7 @@ async function animesEvaluate(page){
             /**
              * Processa os dados da busca e adiciona no array de resultados
              */
-            dados.push({
+            dadosB.push({
                 "title":element.children[0].title,
                 "cover":element.children[0].children[0].children[0].src,
                 "sub":element.children[0].children[0].children[1].innerHTML,
@@ -55,7 +55,7 @@ async function animesEvaluate(page){
         });
         //Retorno da função
         return {
-            dados,
+            dadosB,
             "nextpage": nextpage??''
         }
     })
@@ -132,7 +132,7 @@ export default async function(req,res){
     /**
      * Processamento de dados
      */
-    let animes = await animesEvaluate(page)
+    let animesB = await animesEvaluate(page)
 
     //fecha o navegador
     await browser.close();
@@ -150,7 +150,7 @@ export default async function(req,res){
      * o servidor vai retornar o cache da ultima requisição com sucesso!
      * caso o cache já tenha expirado vai executar todo o código do endpoint e definir um novo cache
      */
-    res.status(200).send({animes,
+    res.status(200).send({animesB,
                         "data":daa});
     }
     else{

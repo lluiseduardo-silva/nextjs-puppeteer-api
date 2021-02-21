@@ -45,7 +45,7 @@ async function animesEvaluate(page) {
                 /**
                  * Processa os campos necessarios e adiciona no array
                  */
-                dados.push({
+                dadosL.push({
                     "title": element.title,
                     "pageLink": element.href,
                 })
@@ -75,7 +75,7 @@ async function animesEvaluate(page) {
          * Retorna o array e o link da proxima pagina caso exista
          */
         return {
-             dados,
+             dadosL,
             "nextpage": nextpage ?? ''
         }
     })
@@ -152,7 +152,7 @@ export default async function (req, res) {
     /**
      * Processamento de dados
      */
-    let animes = await animesEvaluate(page)
+    let animesL = await animesEvaluate(page)
 
     //fecha o navegador
     await browser.close();
@@ -171,7 +171,7 @@ export default async function (req, res) {
     if(Object.keys(animes['dados']).length > 0){
         res.setHeader('Cache-Control', 's-maxage=604800');
         res.status(200).send({
-            animes,
+            animesL,
             "data": daa
         });
     }
