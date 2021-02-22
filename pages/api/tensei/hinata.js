@@ -21,7 +21,7 @@ const randomUseragent = require('random-useragent');
 async function animesEvaluate(page) {
     //Retorna o resultado da função assincrona evaluate
     return await page.evaluate(() => {
-        dados = [];
+        dadoslista = [];
 
         //Verifica se o retorno foi maior que 0
         if (document.querySelectorAll('body > div.mwidth > div.listaPagAnimes > div').length >= 1) {
@@ -32,7 +32,7 @@ async function animesEvaluate(page) {
                 /**
                  * Processa os campos necessarios e adiciona no array
                  */
-                dados.push({
+                dadoslista.push({
                     "title": element.children[0].title,
                     "pageLink": element.children[0].href,
                 })
@@ -45,7 +45,7 @@ async function animesEvaluate(page) {
                 /**
                  * Processa os campos necessarios e adiciona no array
                  */
-                dadosL.push({
+                dadoslista.push({
                     "title": element.title,
                     "pageLink": element.href,
                 })
@@ -75,7 +75,7 @@ async function animesEvaluate(page) {
          * Retorna o array e o link da proxima pagina caso exista
          */
         return {
-             dadosL,
+             dadoslista,
             "nextpage": nextpage ?? ''
         }
     })
@@ -152,7 +152,7 @@ export default async function (req, res) {
     /**
      * Processamento de dados
      */
-    let animesL = await animesEvaluate(page)
+    let animeslista = await animesEvaluate(page)
 
     //fecha o navegador
     await browser.close();
@@ -168,10 +168,10 @@ export default async function (req, res) {
      * o servidor vai retornar o cache da ultima requisição com sucesso!
      * caso o cache já tenha expirado vai executar todo o código do endpoint e definir um novo cache
      */
-    if(Object.keys(animesL['dados']).length > 0){
+    if(Object.keys(animeslista['dadoslista']).length > 0){
         res.setHeader('Cache-Control', 's-maxage=604800');
         res.status(200).send({
-            animesL,
+            animeslista,
             "data": daa
         });
     }
