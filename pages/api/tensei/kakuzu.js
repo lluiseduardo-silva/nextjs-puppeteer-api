@@ -44,6 +44,7 @@ async function detalheEvaluate(page){
             "sinopse": document.querySelector('#sinopse2')?document.querySelector('#sinopse2').innerText: 'sem sinopse',
             "ano":document.querySelector('#anime > div.animeFlexContainer > div.right > div > div:nth-child(12)')?document.querySelector('#anime > div.animeFlexContainer > div.right > div > div:nth-child(12)').innerText : 'Ano Não expecificado' ,
             "capa":document.querySelector('#capaAnime > img')?document.querySelector('#capaAnime > img').src:'Capa Não encontrada',
+            "pageLink":document.URL,
             "episodios":episodioProcessado
         }
     })
