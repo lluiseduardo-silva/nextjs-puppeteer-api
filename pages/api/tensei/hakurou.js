@@ -45,7 +45,6 @@ export default async function handle(req,res){
         //Define se é para abrir a janela do navegador ou não.
         headless: chrome.headless,
         //Define o tamanho padrão da endpoint
-        defaultViewport: {width: 1024,height:768}
     });
     //Instancia uma nova guia no navegador
     const page = await browser.newPage();
@@ -69,7 +68,7 @@ export default async function handle(req,res){
              * Caso tenha na url alguma dessa informações 
              * Vai recuperar a url da requisição e o cabeçalho
              */
-        }else if (['.m3u8','.mp4','video/mp4'].some(v => request.url().includes(v))){
+        }else if (['.m3u8','.mp4','video/mp4','.MP4','.mkv','.M3U8','.hls','.HLS'].some(v => request.url().includes(v))){
             //Caso o conteudo da url tenha anitube não adiciona a url
             if(request.url().indexOf('anitube') == -1){
                 //se não tiver anitube no conteudo adicona a url e o cabeçalho ao array
