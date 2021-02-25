@@ -140,8 +140,8 @@ export default async function handler(req, res) {
      * Caso o cache expire vai realizar todo o procedimento do endpoint novamente e definir um novo cache
      * If the cache expires it will perform the entire endpoint procedure again and define a new cache
      */
-    res.setHeader('Cache-Control', 's-maxage=60')
-    res.setHeader('Cache-Control', 'stale-while-revalidate=59')
+    res.setHeader('Cache-Control: s-maxage=60, stale-while-revalidate');
+
     //Retorna os dados do endpoint
     //Returns endpoint data
     res.status(200).send({
