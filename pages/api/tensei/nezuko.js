@@ -20,7 +20,7 @@ const randomUseragent = require('random-useragent');
 async function animesEvaluate(page){
     //Retorno da função é o resultado da operaçao assincrona EVALUATE
     return await page.evaluate(()=>{
-        if(document.querySelector('body > div.mwidth > div.searchPagContainer')!= null){
+        if(document.querySelector('body > div.mwidth > div.searchPagContainer> div')!= null){
             //Recupera os animes presentes na pagina
         PageAnimes = document.querySelectorAll('body > div.mwidth > div.searchPagContainer > div ')
         //Array que armazena os resultados
@@ -99,7 +99,7 @@ export default async function(req,res){
          * altere o 'await chrome.executablePath' para 'exec'
          * e você conseguira executar esse endpoint localmente
          */
-        executablePath: await chrome.executablePath,
+        executablePath: exec,
         //Define se é para abrir a janela do navegador ou não.
         headless: chrome.headless,
         //Define o tamanho padrão da endpoint
@@ -145,11 +145,12 @@ export default async function(req,res){
      * Variavel que armazena uma data
      * Ela é usada para manter controle da data de cache no servidor 
      */
+    
+    let daa = new Date();
+    
     if(animesbusca == null){
         res.status(404).send('Conteudo não encontrado')
-    }
-    let daa = new Date();
-    if(Object.keys(animesbusca['dadosbusca']).length > 0){
+    }else if(Object.keys(animesbusca['dadosbusca']).length > 0){
         //Define o tempo de cache no servidor
         res.setHeader('Cache-Control', 's-maxage=1800, stale-while-revalidate');
     /**
@@ -159,8 +160,7 @@ export default async function(req,res){
      */
     res.status(200).send({animesbusca,
                         "data":daa});
-    }
-    else{
+    }else{
         res.status(500).send('Falha ao carregar resultados');
     }
     
