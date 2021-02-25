@@ -8,11 +8,11 @@ const randomUseragent = require('random-useragent');
  * Caso sua maquina esteja exeuctando um sistema operacional X86 altere a string win32 para C:\\Program Files (x86)\\Google\\Chrome\\Application\\chrome.exe
  */
 
-// const chromeExecPaths = {
-//     win32:'C:\\Program Files\\Google\\Chrome\\Application\\chrome.exe',
-//     linux: 'usr/bin/google-chrome',
-//     darwin: '/Applications/Google Chrome.app/Contents/MacOS/Google Chrome'
-// }
+const chromeExecPaths = {
+    win32:'C:\\Program Files\\Google\\Chrome\\Application\\chrome.exe',
+    linux: 'usr/bin/google-chrome',
+    darwin: '/Applications/Google Chrome.app/Contents/MacOS/Google Chrome'
+}
 
 /**
  * Função assincrona que retorna os animes do resultado da pesquisa
@@ -20,7 +20,8 @@ const randomUseragent = require('random-useragent');
 async function animesEvaluate(page){
     //Retorno da função é o resultado da operaçao assincrona EVALUATE
     return await page.evaluate(()=>{
-        //Recupera os animes presentes na pagina
+        if(document.querySelector('body > div.mwidth > div.searchPagContainer')!= null){
+            //Recupera os animes presentes na pagina
         PageAnimes = document.querySelectorAll('body > div.mwidth > div.searchPagContainer > div ')
         //Array que armazena os resultados
         dadosbusca = [];
@@ -58,6 +59,9 @@ async function animesEvaluate(page){
             dadosbusca,
             "nextpage": nextpage??''
         }
+        }else{
+            return null;
+        }
     })
 }
 /**
@@ -67,7 +71,7 @@ export default async function(req,res){
     /**
      * Carrega o local padrão do chrome de acordo com o seu sistema operacional com base na plataforma em que está rodando
      */
-    // let exec = chromeExecPaths[process.platform];
+    let exec = chromeExecPaths[process.platform];
     
     /**
      * Recupera a ULR que vem via parametro na URL no endpoint da rota
@@ -95,11 +99,11 @@ export default async function(req,res){
          * altere o 'await chrome.executablePath' para 'exec'
          * e você conseguira executar esse endpoint localmente
          */
-        executablePath: await chrome.executablePath,
+        executablePath: exec,
         //Define se é para abrir a janela do navegador ou não.
         headless: chrome.headless,
         //Define o tamanho padrão da endpoint
-        defaultViewport: {width: 1024,height:768}
+        // defaultViewport: {width: 1024,height:768}
     });
 
     //Instancia uma nova guia no navegador
@@ -141,6 +145,9 @@ export default async function(req,res){
      * Variavel que armazena uma data
      * Ela é usada para manter controle da data de cache no servidor 
      */
+    if(animesbusca == null){
+        res.status(404).send('Conteudo não encontrado')
+    }
     let daa = new Date();
     if(Object.keys(animesbusca['dadosbusca']).length > 0){
         //Define o tempo de cache no servidor
