@@ -68,7 +68,7 @@ export default async function handle(req,res){
              * Caso tenha na url alguma dessa informações 
              * Vai recuperar a url da requisição e o cabeçalho
              */
-        }else if (['.m3u8','.mp4','video/mp4','.MP4','.mkv','.M3U8','.hls','.HLS'].some(v => request.url().includes(v))){
+        }else if (['.m3u8','.mp4','video/mp4','.MP4','.mkv','.M3U8'].some(v => request.url().includes(v))){
             //Caso o conteudo da url tenha anitube não adiciona a url
             if(request.url().indexOf('anitube') == -1){
                 //se não tiver anitube no conteudo adicona a url e o cabeçalho ao array
@@ -99,7 +99,7 @@ export default async function handle(req,res){
 
     if(Object.keys(sources).length > 0){
         //Define o tempo de cache no servidor
-    res.setHeader('Cache-Control', 's-maxage=604800')
+    res.setHeader('Cache-Control', 's-maxage=240')
     /**
      * Caso já tenha acontecido uma requisição nesse periodo de tempo
      * o servidor vai retornar o cache da ultima requisição com sucesso!
