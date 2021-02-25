@@ -99,7 +99,7 @@ export default async function(req,res){
          * altere o 'await chrome.executablePath' para 'exec'
          * e você conseguira executar esse endpoint localmente
          */
-        executablePath: exec,
+        executablePath: await chrome.executablePath,
         //Define se é para abrir a janela do navegador ou não.
         headless: chrome.headless,
         //Define o tamanho padrão da endpoint
