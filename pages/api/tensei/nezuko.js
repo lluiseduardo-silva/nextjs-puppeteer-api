@@ -144,7 +144,7 @@ export default async function(req,res){
     let daa = new Date();
     if(Object.keys(animesbusca['dadosbusca']).length > 0){
         //Define o tempo de cache no servidor
-    res.setHeader('Cache-Control', 's-maxage=60, stale-while-revalidate')
+        res.setHeader('Cache-Control', 's-maxage=1800, stale-while-revalidate');
     /**
      * Caso já tenha acontecido uma requisição nesse periodo de tempo
      * o servidor vai retornar o cache da ultima requisição com sucesso!

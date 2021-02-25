@@ -169,7 +169,7 @@ export default async function (req, res) {
      * caso o cache já tenha expirado vai executar todo o código do endpoint e definir um novo cache
      */
     if(Object.keys(animeslista['dadoslista']).length > 0){
-        res.setHeader('Cache-Control', 's-maxage=60');
+        res.setHeader('Cache-Control', 's-maxage=43200, stale-while-revalidate');
         res.status(200).send({
             animeslista,
             "data": daa

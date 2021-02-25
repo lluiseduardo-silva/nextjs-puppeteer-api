@@ -99,8 +99,7 @@ export default async function handle(req,res){
 
     if(Object.keys(sources).length > 0){
         //Define o tempo de cache no servidor
-        res.setHeader('Cache-Control', 's-maxage=1')
-        res.setHeader('Cache-Control', 'stale-while-revalidate=59')
+        res.setHeader('Cache-Control', 's-maxage=2592000, stale-while-revalidate');
     /**
      * Caso já tenha acontecido uma requisição nesse periodo de tempo
      * o servidor vai retornar o cache da ultima requisição com sucesso!
