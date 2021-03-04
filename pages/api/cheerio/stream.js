@@ -41,7 +41,7 @@ export default async function( req, res){
                 //Retorna o resultado
             }
         }).catch(function(err){res.status(500).send(err)})
-        res.status(200).json(json);
+        res.status(200).send({data:json});
     }else{res.status(500).send('Algo deu errado. Verifique a requisição e tente novamente')}
     
     
