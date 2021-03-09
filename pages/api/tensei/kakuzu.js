@@ -42,7 +42,7 @@ async function detalheEvaluate(page){
         return {
             "titulo":document.querySelector('body > div.pagAniTitulo > div').innerText,
             "sinopse": document.querySelector('#sinopse2')?document.querySelector('#sinopse2').innerText: 'sem sinopse',
-            "ano":document.querySelector('#anime > div.animeFlexContainer > div.right > div > div:nth-child(12)').innerText,
+            "ano":document.querySelector('#anime > div.animeFlexContainer > div.right > div > div:nth-child(12)')? document.querySelector('#anime > div.animeFlexContainer > div.right > div > div:nth-child(12)').innerText :'',
             "capa":document.querySelector('#capaAnime > img').src,
             "pageLink":document.URL,
             "episodios":episodioProcessado
