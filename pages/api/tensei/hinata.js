@@ -34,6 +34,7 @@ async function animesEvaluate(page) {
                  */
                 dadoslista.push({
                     "title": element.children[0].title,
+                    "cover":element.children[0].children[0].children[0].src,
                     "pageLink": element.children[0].href,
                 })
             });
@@ -102,7 +103,7 @@ export default async function (req, res) {
      * url recebe o link da primeira pagina de animes como valor
      */
     if (url === '') {
-        url = 'https://www.anitube.site/lista-de-animes-online/'
+        url = 'https://www.anitube.site/lista-de-animes-legendados-online/'
     }
     /**
      * Inicialização do navegador
