@@ -24,7 +24,7 @@ async function animesEvaluate(page) {
         dadoslista = [];
 
         //Verifica se o retorno foi maior que 0
-        if (document.querySelectorAll('body > div.mwidth > div.listaPagAnimes > div').length >= 1) {
+        if (document.querySelectorAll('body > div.mwidth > div.listaPagAnimes > div').length > 0) {
             //Recupera os animes
             PageAnimes = document.querySelectorAll('body > div.mwidth > div.listaPagAnimes > div');
             //ForEach nos animes recuperados da pagina
