@@ -41,7 +41,17 @@ export default async function( req, res){
                 //Retorna o resultado
             }
         }).catch(function(err){res.status(500).send(err)})
-        res.status(200).send({data:json});
+        if(Object.keys(json).length > 0){
+            //Define o tempo de cache no servidor
+            res.setHeader('Cache-Control', 's-maxage=2592000, stale-while-revalidate');
+        /**
+         * Caso já tenha acontecido uma requisição nesse periodo de tempo
+         * o servidor vai retornar o cache da ultima requisição com sucesso!
+         * caso o cache já tenha expirado vai executar todo o código do endpoint e definir um novo cache
+         */
+         res.status(200).send({data:json});
+        }
+        
     }else{res.status(500).send('Algo deu errado. Verifique a requisição e tente novamente')}
     
     
