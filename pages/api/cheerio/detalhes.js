@@ -33,7 +33,7 @@ export default async function(req, res){
         if($('body > div.pagAniTitulo > div > h1').text() == ''){
             throw Error('Elementos não encontrados');
         }
-        res.setHeader('Cache-Control', 's-maxage=3600, stale-while-revalidate');
+        res.setHeader('Cache-Control', 's-maxage=43200, stale-while-revalidate');
         res.status(200).send({
             "titulo":$('body > div.pagAniTitulo > div > h1').text(),
             "capa":$('#capaAnime > img').attr('src'),

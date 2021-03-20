@@ -22,7 +22,7 @@ export default async function(req, res){
         generos.push({"name":$(el).text(),"slug":slug.trim()})
     })
     if(Object.keys(generos).length > 0){
-        res.setHeader('Cache-Control', 's-maxage=3600, stale-while-revalidate');
+        res.setHeader('Cache-Control', 's-maxage=172800, stale-while-revalidate');
         res.status(200).send(generos)
     }
     else{

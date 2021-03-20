@@ -22,7 +22,7 @@ export default async function(req, res){
         "capa":$(el).children('a').children('.aniItemImg').children('img').attr('src')});
     })
     if(Object.keys(resultados).length > 0){
-        res.setHeader('Cache-Control', 's-maxage=3600, stale-while-revalidate');
+        res.setHeader('Cache-Control', 's-maxage=43200, stale-while-revalidate');
         res.status(200).send({resultados,nextPage:$('.next').attr('href')});
     }
     else{
