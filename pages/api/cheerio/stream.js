@@ -74,7 +74,8 @@ export default async function( req, res){
                 backEpLink:backEpLink??''
             },
             detalhes: $('.pagEpiGroupControles > a:nth-child(2)').attr('href'),
-            epName: $('.mwidth > h1').text()
+            epName: $('.mwidth > h1').text(),
+            epLink: url
         });
         }
         
