@@ -39,6 +39,7 @@ export default async function(req, res){
             "capa":$('#capaAnime > img').attr('src'),
             "generos": resultados,
             "sinopse":$('#sinopse2').text(),
+            "link":url,
             episodios
         })
     }catch(ex){
