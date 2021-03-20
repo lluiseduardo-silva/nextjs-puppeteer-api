@@ -61,5 +61,7 @@ export default async function(req, res){
             episodios
         });
     }
-    res.status(500).send('Algo deu errado');
+    else{
+        res.status(500).send('Algo deu errado :p');
+    }
 }

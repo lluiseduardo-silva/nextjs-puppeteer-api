@@ -25,6 +25,7 @@ export default async function(req, res){
         res.setHeader('Cache-Control', 's-maxage=3600, stale-while-revalidate');
         res.status(200).send(generos)
     }
-    res.status(500).send('Algo deu errado :p');
-    
+    else{
+        res.status(500).send('Algo deu errado :p');
+    }
 }
