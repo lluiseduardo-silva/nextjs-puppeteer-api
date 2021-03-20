@@ -73,7 +73,8 @@ export default async function( req, res){
                 backEpName: backEpName == 'Sem Episódio Anterior' ? '':backEpName,
                 backEpLink:backEpLink??''
             },
-            detalhes: url
+            detalhes: $('.pagEpiGroupControles > a:nth-child(2)').attr('href'),
+            epLink: url,
         });
         }
         
