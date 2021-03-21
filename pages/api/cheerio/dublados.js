@@ -16,11 +16,19 @@ export default async function(req, res){
     });
     let $ = cheerio.load(response);
     let resultados = [];
-    $('.listaPagAnimes > div').each((i, el)=>{
-        resultados.push({"titulo":$(el).children('a').attr('title'),
-        "link":$(el).children('a').attr('href'),
-        "capa":$(el).children('a').children('.aniItemImg').children('img').attr('src')});
-    })
+    if( $('.listaPagAnimes > div').length > 0){
+        $('.listaPagAnimes > div').each((i, el)=>{
+            resultados.push({"titulo":$(el).children('a').attr('title'),
+            "link":$(el).children('a').attr('href'),
+            "capa":$(el).children('a').children('.aniItemImg').children('img').attr('src')});
+        })
+    }else{
+        $('.listaPagAnimes > a').each((i, el)=>{
+            resultados.push({"titulo":$(el).attr('title'),
+            "link":$(el).attr('href'),
+            "capa":''});
+        })
+    }
     if(Object.keys(resultados).length > 0){
         res.setHeader('Cache-Control', 's-maxage=43200, stale-while-revalidate');
         res.status(200).send({resultados,nextPage:$('.next').attr('href')});
